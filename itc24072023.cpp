@@ -5,11 +5,10 @@
 using namespace std;
 class GiaoVien{
 	private :
-        char ten[30] , bc[15] ;
+        char ten[30] , bc[15] ,cn[20];
 	    int tuoi ;
 	    float bl ;
     public :
-        char cn[20];
         void nhap()
         {
         	fflush(stdin);
@@ -25,6 +24,12 @@ class GiaoVien{
         float lcb(){
         	return this->bl*610;
 		}
+		float getChuyenNganh(){
+            return cn[0];
+        }
+	    bool operator>(GiaoVien a){
+            return this->getChuyenNganh() > a.getChuyenNganh();
+        }
         void xuat();
     
 };
@@ -82,7 +87,7 @@ void Sapxep(GiaoVien a[], int n)
     {
         for(int j=i+1;j<n;j++)
         {
-           if(strcmp(a[i].cn,a[j].cn)>0)
+           if(strcmp(a[i].getChuyenNganh(),a[j].getChuyenNganh())>0)
           {
             GiaoVien k=a[i];
             a[i]=a[j];
