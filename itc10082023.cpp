@@ -6,12 +6,8 @@ class Nguoi {
 protected:
     string ht ,ns;
 public:
-    Nguoi(string ht = "", string ns = ""){
-        this->ht=ht;
-        this->ns=ns;
-}
-    ~Nguoi(){}
     friend istream& operator >> (istream& in, Nguoi &a){
+        fflush(stdin);
         cout<<"\nNhap ten: ";
         getline(in,a.ht);
         fflush(stdin);
@@ -31,14 +27,10 @@ private :
     char sbd[20];
     float toan , ly , hoa ; 
 public :
-    ThiSinh(char* sbd , float toan=0 , float ly=0 , float hoa=0): Nguoi(ht,ns){
-        strcpy(this->sbd,sbd);
-        this->toan=toan;
-        this->ly=ly;
-        this->hoa=hoa;
-    }
+    
     friend istream& operator >> (istream& in, ThiSinh &a){
         in>>(Nguoi&)a;
+        fflush(stdin);
         cout<<"\nNhap so bao danh :";
         cin.getline(a.sbd,20);
         cout<<"\nNhap diem toan :";
@@ -58,12 +50,24 @@ public :
         return out;
     }
     char *set_sbd(){
-            this->sbd; 
+            return this->sbd; 
         } 
 
     float S(){
         return this->toan + this->ly + this->hoa;
     }
+    float get_toan(){
+        return toan;
+    }
+        
+    float get_ly(){
+        return ly;
+    }
+        
+    float get_hoa(){
+        return hoa;
+    }
+
 };
 void Nhap_DS(ThiSinh a[],int &n)
 {
@@ -101,10 +105,11 @@ void sort(ThiSinh a[], int &n){
 
 void found(ThiSinh a[],int &n){
     cout<<"tim kiem thi sinh qua so bao danh :\n" ;
-    bool check=false; 
     char SBD[20];
     cout<<"Nhap so bao danh thi sinh :";
+    fflush(stdin);
     cin.getline(SBD,20);
+    bool check=false; 
     for(int i=0;i<n;i++){
         if(strcmpi(a[i].set_sbd(),SBD)==0)
         {
@@ -114,6 +119,20 @@ void found(ThiSinh a[],int &n){
     } 
     cout<<(check == false ? "Khong co nguoi ban can tim! \n" : ""); 
 } 
+
+void tinh_ti_le(ThiSinh a[],int n){
+    int dem=0;
+    for(int i=0;i<n;i++)
+    {
+        if(a[i].get_toan() >= 5 && a[i].get_ly() >= 5 && a[i].get_hoa() >= 5)
+        {
+            dem++;
+        }
+    }
+    cout<<"\nXuat ti le thi sinh dat :\n"
+        <<"\nTi le dat: "<<(float)dem/n*100<<endl
+        <<"\nTi le khong dat: "<<100- ((float)dem/n*100)<<endl;
+}
 
 int main()
 {
@@ -125,5 +144,6 @@ int main()
     Xuat_DS(a,n); 
     sort(a,n); 
     found(a,n);
+    tinh_ti_le(a,n);
     return 0;
 }
